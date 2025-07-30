@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: kafka:9092  # ✅ Use Docker service name, not localhost
+
+  data:
+    mongodb:
+      uri: mongodb+srv://adminColdplay:A0Qmud4BgwVmOsaF@cluster0.w5qkm.mongodb.net/authDB?retryWrites=true&w=majority&appName=Cluster0
+      # ✅ This is OK because it's a cloud MongoDB (not local)
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: abhishekwanve369@gmail.com
+    password: hbsbmnvmkswjztbq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8083
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://service-registry:8761/eureka

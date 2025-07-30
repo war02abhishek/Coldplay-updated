@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ticket-processing-service
+
+  kafka:
+    bootstrap-servers: kafka:9092  # ✅ Updated
+
+  data:
+    mongodb:
+      uri: mongodb+srv://adminColdplay:A0Qmud4BgwVmOsaF@cluster0.w5qkm.mongodb.net/authDB?retryWrites=true&w=majority&appName=Cluster0
+
+server:
+  port: 8082
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://service-registry:8761/eureka  # ✅ Updated

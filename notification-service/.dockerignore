@@ -1,0 +1,17 @@
+# Gradle & build artifacts
+.gradle/
+
+# IntelliJ/IDE settings
+.idea/
+*.iml
+
+# OS/Editor junk
+.DS_Store
+*.log
+
+# Git
+.git
+.gitignore
+
+# Env or config files
+*.env

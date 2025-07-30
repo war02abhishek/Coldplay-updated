@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: auth-service-updated
+          uri: lb://auth-service-updated   #(for Eureka-based routing):  #http://auth-service-updated:PORT
+          predicates:
+            - Path=/authgateway/**
+          filters:
+            - StripPrefix=1
+
+        - id: ticket-service
+          uri: lb://ticket-service
+          predicates:
+            - Path=/ticketgateway/**
+          filters:
+            - StripPrefix=1
+
+        - id: ticket-processing-service
+          uri: lb://ticket-processing-service
+          predicates:
+            - Path=/ticketprocessing/**
+          filters:
+            - StripPrefix=1
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+
+  main:
+    web-application-type: reactive
