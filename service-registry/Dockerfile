@@ -1,19 +1,22 @@
-FROM openjdk:11-jdk-slim
+# ---------- Stage 1: Build the JAR ----------
+FROM openjdk:11-jdk-slim AS builder
 
 WORKDIR /app
 
-# Copy Gradle files separately to leverage Docker layer caching
 COPY gradlew .
 COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-# Build the project (skip tests)
 RUN chmod +x gradlew && ./gradlew build -x test
 
-# Copy the built JAR (after building)
-COPY build/libs/*.jar app.jar
+# ---------- Stage 2: Copy only the JAR ----------
+FROM openjdk:11-jdk-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 EXPOSE 8761
 
